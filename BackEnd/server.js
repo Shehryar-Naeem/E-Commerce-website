@@ -39,9 +39,28 @@ const connectDatabase = require("./Config/database")
 dotenv.config({path:"BackEnd/config.env"})
 
 
+//Uncaught Error
+process.on("uncaughtException",(err)=>{
+    console.log(`Uncaught Error ${err.path}`);
+    console.log(`such variable not declared`);
+    process.exit(1)
+})
 
 connectDatabase()
 const PORT = process.env.PORT || 8000
-App.listen(PORT,()=>{
+const server=App.listen(PORT,()=>{
     console.log(`Server is created at port ${PORT}`);
+})
+
+
+
+
+//UnHandlePromiseRejection
+
+process.on("unhandledRejection",(err)=>{
+    console.log(`Mongodb url Error ${err.path}`);
+    console.log(`Shutdown the server`);
+    server.close(()=>{
+        process.exit(1)
+    })
 })

@@ -18,7 +18,7 @@
 const express= require("express")
 const App = express()
 const Router = require("./Routers/Router")
-
+const MiddlerWare = require("./MiddlerWare/ErrorMiddleWare")
 
 App.use(express.json())
 
@@ -28,5 +28,6 @@ App.use(express.json())
 // })
 
 App.use("/api/product",Router)
+App.use(MiddlerWare)
 
 module.exports = App;
