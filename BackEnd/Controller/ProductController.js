@@ -91,13 +91,15 @@ const ApiFeatures = require("../Utils/ApiFeature")
 //getAllProductRoute
 const getAllProducts=AsyncError(async(req,res,next)=>{
 
-
-    const Apifeature = new ApiFeatures(products.find(),req.query).search()
+    const resultPerPage=5;
+    const countProduct= await products.countDocuments()
+    const Apifeature = new ApiFeatures(products.find(),req.query).search().filter().pagination(resultPerPage)
     const getAllProducts= await Apifeature.query
 
     res.status(201).json({
         success:true,
-        getAllProducts
+        getAllProducts,
+        countProduct
     })
 
 })
