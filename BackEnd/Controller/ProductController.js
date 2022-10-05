@@ -106,6 +106,8 @@ const getAllProducts=AsyncError(async(req,res,next)=>{
 
 
 const createAProduct=AsyncError( async(req,res,next)=>{
+
+    req.body.user= req.user.id
     const createProduct= await products.create(req.body)
 
     res.status(201).json({
