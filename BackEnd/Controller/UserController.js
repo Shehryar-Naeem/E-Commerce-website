@@ -132,7 +132,7 @@ const resetUserPassword=AsyncError(async(req,res,next)=>{
     UserRestPassword.resetPasswordExpire= undefined
 
     await UserRestPassword.save()
-    saveAndSendCookies(UserRestPassword,200,res )
+    saveAndSendCookies(UserRestPassword,200,res)
      
 })
 
@@ -144,6 +144,25 @@ const getUserDetail= AsyncError(async(req,res,next)=>{
         success:true,
         getUser
     })
+})
+
+
+const UpdatePassowrd = AsyncError(async(req,res,next)=>{
+    const UpdateUserPassword = await User.findById(req.user.id).select("+password")
+
+    const isPasswordMatch= await UpdateUserPassword.comparePassword(req.body.oldPassword)
+    if(!isPasswordMatch){
+        new next(new ErrorHandler('old password is incorrect', 400))
+    }
+    
+    if(req.body.newPassword!== req.body.confirmPassword){
+        new next(new ErrorHandler('password does not match', 400))
+        
+    }
+    UpdateUserPassword.password=req.body.newPassword
+    
+    await UpdateUserPassword.save()
+    saveAndSendCookies(UserRestPassword,200,res)
 })
 module.exports= {registerUser,userLogin,logOutController,foregetPassword,resetUserPassword,getUserDetail}
 
