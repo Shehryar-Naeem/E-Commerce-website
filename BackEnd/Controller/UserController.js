@@ -202,6 +202,42 @@ const getSingleUserByAdmin=AsyncError(async (req,res,next)=>{
         getSingleUser,
     })
 })
-module.exports= {registerUser,userLogin,logOutController,foregetPassword,resetUserPassword,getUserDetail,UpdatePassowrd,updateUserProfile,getAllUserByAdmin,getSingleUserByAdmin}
+
+
+// give admin role to simple user
+const updateUserRole= AsyncError(async (req,res,next)=>{
+    const newUserData={
+        name:req.body.name,
+        email:req.body.email,
+        role:req.body.role
+    }
+
+    const updateUserData= await User.findByIdAndUpdate(req.params.id,newUserData,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false
+    })
+
+    res.status(200).json({
+        success:true
+    })
+})
+
+
+// delete the user by admin
+const deleteUserByAdmin=AsyncError(async (req,res,next)=>{
+    const deleteTheUser= await User.findById(req.params.id)
+
+    if(!deleteTheUser){
+        return next(new ErrorHandler("User not found so user not deleted",400))
+    }
+    await deleteTheUser.remove()
+
+    res.status(200).json({
+        success:true,
+        message:`${req.user.name} is deleted`
+    })
+})
+module.exports= {registerUser,userLogin,logOutController,foregetPassword,resetUserPassword,getUserDetail,UpdatePassowrd,updateUserProfile,getAllUserByAdmin,getSingleUserByAdmin,updateUserRole,deleteUserByAdmin}
 
 
