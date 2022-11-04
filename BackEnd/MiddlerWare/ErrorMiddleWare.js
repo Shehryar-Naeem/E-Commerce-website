@@ -26,16 +26,18 @@ module.exports =(err,req,res,next)=>{
     }
     // duplication email or key error
     if(err.code===11000){
-        const message= `Duplication ${Object.keys(err.keyValue)} Entered`
-        err = new ErrorHandler(message,400)
-    }
-    // wrong JWT Error
-    if(err.name==="jwtwebtokenError"){
-
-        const message= `json webtoken is invalid, try again`
+        const message= `You Duplication ${Object.keys(err.keyValue)} Entered`
         err= new ErrorHandler(message,400)
     }
+    // // wrong JWT Error
+    // if(err.name==="jwtwebtokenError"){
 
+    //     const message= `json webtoken is invalid, try again`
+    //     err= new ErrorHandler(message,400)
+    // }
+    if(err.name === "jwtwebtokenError"){
+        const message= `json webtoken is invalid`
+    }
 
     if(err.name=== "tokenExpireError"){
         const message= `json webtoken is Expired, try again`

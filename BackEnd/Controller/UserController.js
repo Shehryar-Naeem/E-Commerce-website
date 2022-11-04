@@ -5,6 +5,7 @@ const ErrorHandler = require("../Utils/ErrorHandler")
 const saveAndSendCookies = require("../Utils/JWtSaveCookies")
 const sendEmail= require("../Utils/sendEmail")
 const crypto = require("crypto")
+
 const registerUser= AsyncError(async(req,res,next)=>{
     const {name,email,password}= req.body
 
@@ -112,30 +113,27 @@ const foregetPassword= AsyncError(async (req,res,next)=>{
     }
 });
 
-//reset password
-const resetUserPassword=AsyncError(async(req,res,next)=>{
-    // create token hash
-    const restTokenForPassword= crypto.createHash("sha256").update(req.params.token)
+//Function for restPassword
+const resetUserPassword= AsyncError(async (req,res,next)=>{
+    const getRestPasswordToken= crypto.createHash("sha256").update(req.params.token).digest("hex")
 
-    const UserRestPassword= await User.findOne({
-        restTokenForPassword,
+    const getUserForRestPassword= await User.findOne({
+        getRestPasswordToken,
         resetPasswordExpire:{$gt:Date.now()}
     })
-    if(!UserRestPassword){
-       return next(new ErrorHandler(`Reset password Token is invalid or has been expired`,400))
+    if(!getUserForRestPassword){
+        return next(new ErrorHandler(`RestPasswordToken is invalid or has been Expired`,400))
     }
-    if(req.body.password!==req.body.confirmPassword){
-        return next(new ErrorHandler(`Password does not rematch`,400))
+    if(req.body.password!== req.body.confirmPassword){
+        return next(new ErrorHandler(`confirm Password does not matched`,400))
     }
-    UserRestPassword.password= req.body.password;
-    UserRestPassword.restPasswordToken= undefined
-    UserRestPassword.resetPasswordExpire= undefined
+    getUserForRestPassword.password= req.body.password
+    getUserForRestPassword.resetPasswordToken= undefined
+    getUserForRestPassword.resetPasswordExpire= undefined
 
-    await UserRestPassword.save()
-    saveAndSendCookies(UserRestPassword,200,res)
-     
+    await getUserForRestPassword.save()
+    saveAndSendCookies(getUserForRestPassword,200,res)
 })
-
 
 const getUserDetail= AsyncError(async(req,res,next)=>{
     const getUser= await User.findById(req.user.id)
@@ -146,24 +144,64 @@ const getUserDetail= AsyncError(async(req,res,next)=>{
     })
 })
 
-
+// update user password
 const UpdatePassowrd = AsyncError(async(req,res,next)=>{
     const UpdateUserPassword = await User.findById(req.user.id).select("+password")
 
     const isPasswordMatch= await UpdateUserPassword.comparePassword(req.body.oldPassword)
     if(!isPasswordMatch){
-        new next(new ErrorHandler('old password is incorrect', 400))
+        return new next(new ErrorHandler('old password is incorrect', 400))
     }
     
     if(req.body.newPassword!== req.body.confirmPassword){
-        new next(new ErrorHandler('password does not match', 400))
+        return new next(new ErrorHandler('password does not match', 400))
         
     }
     UpdateUserPassword.password=req.body.newPassword
     
     await UpdateUserPassword.save()
-    saveAndSendCookies(UserRestPassword,200,res)
+    saveAndSendCookies(UpdateUserPassword,200,res)
 })
-module.exports= {registerUser,userLogin,logOutController,foregetPassword,resetUserPassword,getUserDetail}
+
+
+// update User profile
+const updateUserProfile= AsyncError(async (req,res,next)=>{
+    const newUserData={
+        name:req.body.name,
+        email:req.body.email
+    }
+
+    const updateUserData= await User.findByIdAndUpdate(req.user.id,newUserData,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false
+    })
+
+    res.status(200).json({
+        success:true
+    })
+})
+// this can access by admin
+const getAllUserByAdmin=AsyncError(async (req,res,next)=>{
+    const getAllUser= await User.find()
+
+    res.status(200).json({
+        success:true,
+        getAllUser
+    })
+})
+const getSingleUserByAdmin=AsyncError(async (req,res,next)=>{
+    const getSingleUser= await User.findById(req.params.id)
+
+    if(!getSingleUser){
+        return new ErrorHandler("such your not found",400)
+    }
+
+    res.status(200).json({
+        success:true,
+        getSingleUser,
+    })
+})
+module.exports= {registerUser,userLogin,logOutController,foregetPassword,resetUserPassword,getUserDetail,UpdatePassowrd,updateUserProfile,getAllUserByAdmin,getSingleUserByAdmin}
 
 

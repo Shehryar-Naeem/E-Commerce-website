@@ -20,7 +20,7 @@ const userModel= new mongoose.Schema({
     password:{
         type:String,
         required:[true,"Please enter your password"],
-        minilength:[8,"Your password should be greator than 8 characer"],
+        minlength:[8,"Your password should be greator than 8 characer"],
         select:false // this line mean when simple user enter his password and when admin check this user specification admin will not be able to access this simpler user password
     },
     avatar:{
@@ -64,7 +64,7 @@ userModel.methods.comparePassword= async function(enterPassword){
 // for reset Password
 userModel.methods.getRestPasswordToken= function(){
     const restTokenForPassword= crypto.randomBytes(20).toString("hex")
-
+    
     this.restPasswordToken= crypto.createHash("sha256").update(restTokenForPassword).digest("hex")
 
     this.resetPasswordExpire= Date.now() + 15 * 60 * 1000

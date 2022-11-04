@@ -7,7 +7,7 @@ const User = require("../Models/UserModel");
 const isAuthenticationUser= AsyncError(async (req,res,next)=>{
     const {token} = req.cookies;
 
-    console.log(token);
+    // console.log(token);
 
     if(!token){
         return next(new ErrorHandler("You could access the resources before login",401))
