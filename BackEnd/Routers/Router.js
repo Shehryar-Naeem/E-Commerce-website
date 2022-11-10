@@ -16,6 +16,8 @@ const {
   updateAProduct,
   getASingleProduct,
   reviewsAboutProduct,
+  getAllReviewsAboutProduct,
+  deleteReviews,
 } = require("../Controller/ProductController");
 const { isAuthenticationUser, AuthorizationRole } = require("../MiddlerWare/Authentication");
 
@@ -29,4 +31,5 @@ Router.route("/products/:id")
   .put(isAuthenticationUser,updateAProduct)
   .get(getASingleProduct);
 Router.route("/review").put(isAuthenticationUser,reviewsAboutProduct)
+Router.route("/reviews").get(getAllReviewsAboutProduct).delete(isAuthenticationUser,deleteReviews)
 module.exports = Router;

@@ -5,15 +5,24 @@ const AsyncError = require("./AsyncError");
 const jwt = require("jsonwebtoken");
 const User = require("../Models/UserModel");
 const isAuthenticationUser= AsyncError(async (req,res,next)=>{
-    const {token} = req.cookies;
+    // const {token} = req.cookies;
 
-    // console.log(token);
+    // // console.log(token);
+
+    // if(!token){
+    //     return next(new ErrorHandler("You could access the resources before login",401))
+    // }
+    // const deCodedData= jwt.verify(token,process.env.JWT_SECRET)
+
+    // req.user= await User.findById(deCodedData.id)
+    // next()
+    const token = req.cookies.token
 
     if(!token){
-        return next(new ErrorHandler("You could access the resources before login",401))
+        return next(new ErrorHandler("You could access acces the resourece before login please",401))
     }
-    const deCodedData= jwt.verify(token,process.env.JWT_SECRET)
 
+    const deCodedData= jwt.verify(token,process.env.JWT_SECRET)
     req.user= await User.findById(deCodedData.id)
     next()
 })

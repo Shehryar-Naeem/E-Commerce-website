@@ -20,6 +20,7 @@ const App = express()
 const Router = require("./Routers/Router")
 const MiddlerWare = require("./MiddlerWare/ErrorMiddleWare")
 const userRouter = require("./Routers/UserRouter")
+const orderRoute = require("./Routers/OrderRouter")
 const cookieParser = require("cookie-parser") 
 
 
@@ -32,6 +33,7 @@ App.use(cookieParser())
 
 App.use("/api/product",Router)
 App.use("/api/user",userRouter)
+App.use("/api/order",orderRoute)
 App.use(MiddlerWare)
 
 module.exports = App;
