@@ -18,9 +18,10 @@ const App = () => {
         <Headers />
         <Routes>
           <Route path="/" element={<Home/>}/>
+
         </Routes>
-      </Router>
       <Footer/>
+      </Router>
     </>
   );
 };
