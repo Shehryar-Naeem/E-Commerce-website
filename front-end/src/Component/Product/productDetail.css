@@ -1,0 +1,7 @@
+.product_detail{
+    width: 100vw;
+    max-width: 100%;
+    margin: 6vmax;
+    box-sizing: border-box;
+    display: flex;
+}

@@ -38,7 +38,7 @@ export const ProductReducers = (state = { getProducts: [] }, action) => {
 
 
 
-export const ProductDetailReducer=(state={product:{}}, action)=>{
+export const ProductDetailReducer=(state={getSingleProduct:{}}, action)=>{
     switch(action.type){
         case PRODUCT_DETAIL_REQUEST:
             return {
@@ -48,7 +48,7 @@ export const ProductDetailReducer=(state={product:{}}, action)=>{
         case PRODUCT_DETAIL_SUCCESS:
             return {
                 loading:false,
-                product:action.payload
+                getSingleProduct:action.payload
             }
         case PRODUCT_DETAIL_FAIL:
             return {

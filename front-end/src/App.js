@@ -4,6 +4,7 @@ import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import WebFont from "webfontloader";
 import Footer from "./Component/Layout/Footer/Footer.js";
 import Home from "./Component/Home/Home.js"
+import ProductDetails from "./Component/Product/ProductDetails.js"
 const App = () => {
   React.useEffect(() => {
     WebFont.load({
@@ -18,7 +19,7 @@ const App = () => {
         <Headers />
         <Routes>
           <Route path="/" element={<Home/>}/>
-
+          <Route path="/products/:id" element={<ProductDetails/>}/>
         </Routes>
       <Footer/>
       </Router>
