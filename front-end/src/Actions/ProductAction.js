@@ -29,7 +29,7 @@ export const productDetailAction= (id)=> async (dispatch)=>{
 
         dispatch({
             type:PRODUCT_DETAIL_SUCCESS,
-            payload:data.getSingleProduct
+            payload:data
         })
     }catch(error){
         dispatch({
