@@ -5,6 +5,8 @@ import WebFont from "webfontloader";
 import Footer from "./Component/Layout/Footer/Footer.js";
 import Home from "./Component/Home/Home.js"
 import ProductDetails from "./Component/Product/ProductDetails.js"
+import Products from "./Component/Product/Products.js"
+import Search from "./Component/Product/Search.js"
 import "./App.css"
 
 const App = () => {
@@ -21,7 +23,11 @@ const App = () => {
         <Headers />
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/products/:id" element={<ProductDetails/>}/>
+          <Route path="/singleproduct/:id" element={<ProductDetails/>}/>
+          <Route path="/products" element={<Products/>}/>
+          <Route path="/products/:keyword" element={<Products/>}/>
+
+          <Route path="/search" element={<Search/>} />
         </Routes>
       <Footer/>
       </Router>

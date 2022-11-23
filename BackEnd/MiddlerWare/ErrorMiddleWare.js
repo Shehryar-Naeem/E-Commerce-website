@@ -36,7 +36,8 @@ module.exports =(err,req,res,next)=>{
     //     err= new ErrorHandler(message,400)
     // }
     if(err.name === "jwtwebtokenError"){
-        const message= `json webtoken is invalid`
+        const message= `json webtoken is invalid try again`
+        err= new ErrorHandler(message,400)
     }
 
     if(err.name=== "tokenExpireError"){

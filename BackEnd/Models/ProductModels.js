@@ -97,10 +97,12 @@ const ProductSchema =new mongoose.Schema({
         {
             public_id:{
                 type:String,
-                required:true
+                required:true,
+                default:45
             },
             img_url:{
                 type:String,
+                default:"https://cdn.allbirds.com/image/upload/f_auto,q_auto,w_1110/cms/4O4cOXrGLvTEI4P7nU24qI/5e4ef885b61b17068fdd7d5b5f6388c0/AA003MM_SHOE_LEFT_GLOBAL_MENS_TREE_DASHER2_HAZY_INDIGO_BLIZZARD_.png",
                 required:true
             }
         }

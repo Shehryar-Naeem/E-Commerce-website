@@ -84,18 +84,20 @@ const AsyncError = require("../MiddlerWare/AsyncError");
 const ApiFeatures = require("../Utils/ApiFeature");
 //getAllProductRoute
 const getAllProducts = AsyncError(async (req, res, next) => {
-  const resultPerPage = 5;
+  // return next(new ErrorHandler("my new built in error",500))
+  const resultPerPage = 8;
   const countProduct = await Products.countDocuments();
   const Apifeature = new ApiFeatures(Products.find(), req.query)
     .search()
     .filter()
     .pagination(resultPerPage);
-  const getAllProducts = await Apifeature.query;
+  const getProducts = await Apifeature.query;
 
   res.status(201).json({
     success: true,
-    getAllProducts,
+    getProducts,
     countProduct,
+    resultPerPage
   });
 });
 

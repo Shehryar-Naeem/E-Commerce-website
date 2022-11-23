@@ -24,9 +24,9 @@ const { isAuthenticationUser, AuthorizationRole } = require("../MiddlerWare/Auth
 
 const Router = express.Router();
 
-Router.route("/getAllProducts").get(isAuthenticationUser,AuthorizationRole("admin"),getAllProducts);
+Router.route("/getAllProducts").get(getAllProducts);
 Router.route("/createAProduct").post(isAuthenticationUser, AuthorizationRole("admin"),createAProduct);
-Router.route("/products/:id")
+Router.route("/singleProduct/:id")
   .delete(isAuthenticationUser,AuthorizationRole("admin"), deleteAProduct)
   .put(isAuthenticationUser,updateAProduct)
   .get(getASingleProduct);

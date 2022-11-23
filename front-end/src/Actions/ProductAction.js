@@ -2,11 +2,11 @@ import { ALL_PRODUCT_REQUEST, ALL_PRODUCT_SUCCESS, ALL_PRODUCT_FAIL, CLEAR_ERROR
 
 import axios from "axios";
 
-export const getAllProductAction= ()=> async (dispatch)=>{
+export const getAllProductAction= (keyword="",currentPage=1)=> async (dispatch)=>{
     try{
         dispatch({type:ALL_PRODUCT_REQUEST})
-
-        const {data} = await axios.get("/api/product/getAllProducts")
+        const link =`/api/product/getAllProducts?keyword=${keyword}&page=${currentPage}`
+        const {data} = await axios.get(link)
         dispatch({
             type:ALL_PRODUCT_SUCCESS,
             payload:data
@@ -25,7 +25,7 @@ export const productDetailAction= (id)=> async (dispatch)=>{
             type:PRODUCT_DETAIL_REQUEST
         })
 
-        const {data}= await axios.get(`/api/product/products/${id}`)
+        const {data}= await axios.get(`/api/product/singleProduct/${id}`)
 
         dispatch({
             type:PRODUCT_DETAIL_SUCCESS,

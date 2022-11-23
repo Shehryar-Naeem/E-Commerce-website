@@ -18,7 +18,7 @@ const ProductDetails = () => {
   useEffect(() => {
     if(error){
       alert.error(error)
-      dispatch(clearErrorAction)
+      dispatch(clearErrorAction())
     }
     dispatch(productDetailAction(id));
   }, [dispatch, id,alert,error]);
