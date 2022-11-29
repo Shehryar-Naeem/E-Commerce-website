@@ -8,9 +8,10 @@
     text-align: center;
 }
 .products{
+    width: 70vw;
     display: flex;
     flex-wrap: wrap;
-    padding: 0 5vmax;
+    margin: 0 auto;
     justify-content: center;
 }
 .pagination_box{
@@ -57,4 +58,11 @@
 }
 .pageLinkActive{
     color: #fff;
+}
+
+.filter_box{
+    width: 14vmax;
+    position: absolute;
+    top: 10vmax;
+    left: 4vmax;
 }
