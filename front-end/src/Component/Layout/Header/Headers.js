@@ -1,6 +1,11 @@
 import React  from "react"
 import {ReactNavbar} from "overlay-navbar"
+import "overlay-navbar/dist/lib/ReactNavbar.min.css";
 import logo from "../../../Images/e_img.png"
+import SearchIcon from "@material-ui/icons/Search"
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+
 const Headers=()=>{
     const options = {
         burgerColorHover: "#eb4034",
@@ -26,13 +31,21 @@ const Headers=()=>{
         link1ColorHover: "#eb4034",
         link1Margin: "1vmax",
         profileIconUrl: "/login",
-        profileIconColor: "rgba(35, 35, 35,0.8)",
+        profileIconColor: "rgba(35, 35,35,0.8)",
         searchIconColor: "rgba(35, 35, 35,0.8)",
         cartIconColor: "rgba(35, 35, 35,0.8)",
         profileIconColorHover: "#eb4034",
         searchIconColorHover: "#eb4034",
         cartIconColorHover: "#eb4034",
         cartIconMargin: "1vmax",
+        searchIcon:true,
+        SearchIconElement:SearchIcon,
+        cartIcon:true,
+        CartIconElement:ShoppingCartIcon,
+        profileIcon:true,
+        ProfileIconElement:PersonOutlineIcon
+        
+        
       };
     return (
         <>

@@ -90,14 +90,18 @@ const getAllProducts = AsyncError(async (req, res, next) => {
   const Apifeature = new ApiFeatures(Products.find(), req.query)
     .search()
     .filter()
-    .pagination(resultPerPage);
-  const getProducts = await Apifeature.query;
+    let getProducts = await Apifeature.query.clone()
+    let filterCountProducts = getProducts.length
+
+    Apifeature.pagination(resultPerPage);
+    getProducts = await Apifeature.query;
 
   res.status(201).json({
     success: true,
     getProducts,
     countProduct,
-    resultPerPage
+    resultPerPage,
+    filterCountProducts
   });
 });
 

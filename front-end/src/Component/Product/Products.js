@@ -10,12 +10,17 @@ import { useAlert } from "react-alert";
 import LoadingComp from "../Layout/Loader/Loading";
 import ProductCard from "../Home/ProductCard";
 import "./Products.css";
-import Typpgraphy from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
+import MetaData from "../Layout/MetaData";
+
+
+const categories= ["shees","clothes","shoes","laptop"]
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [price,setPrice]=useState([0,25000])
-
+  const [productCategory,setProductCategory]=useState("")
+  const [ratings,setRatings]= useState(0)
   
 
   const setCurrentPageNO = (e) => {
@@ -35,8 +40,8 @@ const Products = () => {
       alert.error(error);
       dispatch(clearErrorAction());
     }
-    dispatch(getAllProductAction(keyword, currentPage, price));
-  }, [dispatch, alert, error, keyword, currentPage, price]);
+    dispatch(getAllProductAction(keyword, currentPage, price,productCategory,ratings));
+  }, [dispatch, alert, error, keyword, currentPage, price,productCategory,ratings]);
   let count = filterCountProducts
   return (
     <>
@@ -44,6 +49,7 @@ const Products = () => {
         <LoadingComp />
       ) : (
         <>
+          <MetaData title="products & e-commerce"/>
           <h2 className="product_heading">Products</h2>
           <div className="products">
             {getProducts &&
@@ -53,7 +59,7 @@ const Products = () => {
           </div>
 
           <div className="filter_box">
-            <Typpgraphy>Price</Typpgraphy>
+            <Typography>Price</Typography>
             <Slider
               value={price}
               onChange={priceHandler}
@@ -62,9 +68,24 @@ const Products = () => {
               min={0}
               max={25000}
             />
+
+            <Typography>Category</Typography>
+            <ul className="catergory_box">
+              {
+                categories.map((category)=>(
+                  <li className="category_link" key={category} onClick={()=>setProductCategory(category)}>
+                    {category}
+                  </li>
+                ))
+              }
+            </ul>
+            <fieldset>
+            <Typography component="legend">Ratings Above</Typography>
+            <Slider value={ratings} onChange={(e,newRating)=> setRatings(newRating)} aria-labelledby="coutinous-slider" min={0} max={5} valueLabelDisplay="auto"/>
+            </fieldset>
           </div>
 
-          {resultPerPage < count && (
+          {resultPerPage <  count  && (
             <div className="pagination_box">
               <Pagination
                 activePage={currentPage}

@@ -2,10 +2,13 @@ import { ALL_PRODUCT_REQUEST, ALL_PRODUCT_SUCCESS, ALL_PRODUCT_FAIL, CLEAR_ERROR
 
 import axios from "axios";
 
-export const getAllProductAction= (keyword="",currentPage=1,price=[0,25000])=> async (dispatch)=>{
+export const getAllProductAction= (keyword="",currentPage=1,price=[0,25000],productCategory,ratings=0)=> async (dispatch)=>{
     try{
         dispatch({type:ALL_PRODUCT_REQUEST})
-        const link =`/api/product/getAllProducts?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`
+        let link =`/api/product/getAllProducts?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`
+        if(productCategory){
+            link = `/api/product/getAllProducts?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${productCategory}`
+        }
         const {data} = await axios.get(link)
         dispatch({
             type:ALL_PRODUCT_SUCCESS,

@@ -13,6 +13,7 @@
     flex-wrap: wrap;
     margin: 0 auto;
     justify-content: center;
+    min-height: 30vh;
 }
 .pagination_box{
     display: flex;
@@ -65,4 +66,31 @@
     position: absolute;
     top: 10vmax;
     left: 4vmax;
+}
+.catergory_box{
+    padding: 0%;
+}
+.category_link{
+    list-style: none;
+    color: rgba(0, 0, 0, 0.61);
+    font: 400 1vmax "Roboto";
+    margin: 0.4vmax;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.category_link:hover{
+    color: tomato;
+}
+.filter_box > fieldset{
+    border: 1px solid rgba(0, 0, 0, 0.21);
+}
+@media screen and (max-width:660px){
+    .filter_box{
+        width: 20vmax;
+        position: static;
+        margin: auto;
+    }
+    .page-link{
+        font: 400 1.7vmax "Roboto";
+    }
 }
