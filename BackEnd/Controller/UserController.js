@@ -5,14 +5,19 @@ const ErrorHandler = require("../Utils/ErrorHandler")
 const saveAndSendCookies = require("../Utils/JWtSaveCookies")
 const sendEmail= require("../Utils/sendEmail")
 const crypto = require("crypto")
-
+const cloudinary = require("cloudinary")
 const registerUser= AsyncError(async(req,res,next)=>{
+    const myCloud = await cloundinary.v2.uploader.upload(req.body.avatar,{
+        folder:"Ecommerce",
+        width:150,
+        crop:"scale"
+    })
     const {name,email,password}= req.body
 
     const user= await User.create({
         name,email,password,avatar:{
-            public_id:"5sts",
-            img_url:"https://p.kindpng.com/picc/s/24-248253_user-profile-default-image-png-clipart-png-download.png"
+            public_id:myCloud.public_id,
+            img_url:myCloud.secure_url
         }
     })
     // const token = user.getJWTToken();

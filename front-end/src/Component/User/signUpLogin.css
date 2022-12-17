@@ -1,0 +1,193 @@
+.login_signup_container{
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(231, 231, 231);
+    position: fixed;
+    left: 0%;
+    top: 0%;
+}
+.login_signup_box{
+    background: #fff;
+    width: 25vw;
+    height: 70vh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.login_signup_toggle{
+    display: flex;
+    /* background-color: blue; */
+    height: 3vmax
+}
+.login_signup_toggle > p{
+    /* background-color: red;
+    border: 1px solid blue; */
+    color: rgba(0, 0, 0, 0.678);
+    font: 300 1.2vmax "Roboto";
+    transition: all 0.5s;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    width: 100%;
+}
+.login_signup_box > p:hover{
+    color: tomato;
+} 
+.login_signup_box > div >button{
+    background: tomato;
+    height: 3px;
+    width: 50%;
+    border: none;
+    outline: none;
+    transition:  all 0.5s;
+}
+.login_form,
+.signUp_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 2vmax;
+    justify-content: space-evenly;
+    height: 70%;
+    transition:  all 0.5s;
+}
+.signUp_form{
+    transform: translateX(-100vmax) translateY(-100%);
+}
+#signUp_image >img{
+    width: 3vmax;
+    border-radius: 100%;
+}
+#signUp_image > input{
+    display: flex;
+    padding: 0%;
+}
+#signUp_image > input::file-selector-button{
+    cursor: pointer;
+    width: 100%;
+    z-index: 2;
+    height: 5vh;
+    border: none;
+    margin: 0%;
+    font: 400 1vmax cursive;
+    transition: all 0.5s;
+    padding: 1vmax;
+    color: rgba(0, 0, 0, 0.625);
+    background: rgb(255, 255, 255);
+}
+#signUp_image >input::file-selector-button:hover{
+    background: rgb(235, 235, 235);
+}
+.login_form >div ,
+.signUp_form >div{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.login_form > div > input,
+.signUp_form > div > input{
+    padding: 1vmax 4vmax;
+    padding-right: 1vmax;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    border-radius: 4px;
+}
+
+.login_form > div > svg,
+.signUp_form > div > svg{
+    position: absolute;
+    transform: translateX(1vmax);
+    font-size: 1.6vmax;
+    color: rgba(0, 0, 0, 0.623);
+}
+.login_form > a{
+    color: rgba(0,0,0,0.653);
+    text-decoration: none;
+    align-self: flex-end;
+    transition: all 0.5s;
+    font: 500 1.2vmax "Gill Sans";
+    cursor: pointer;
+}
+.login_form > a:hover{
+    color: black;
+}
+.login_btn,
+.signUp_btn{
+    border: none;
+    background-color: tomato;
+    color:#fff;
+    font: 300 1vmax "Roboto";
+    width: 100%;
+    padding: 0.8vmax;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.5s;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.219);
+}
+.login_btn:hover,
+.signUp_btn:hover{
+    background: rgb(179,66,46);
+}
+.shift_to_left{
+    transform: translateX(-100%);
+}
+.shift_to_neutral{
+    transform: translateX(0%);
+}
+.shift_to_neutral_form{
+    transform:  translateX(0%) translateY(-100%);
+}
+.shift_to_right{
+    transform: translateX(100%);
+}
+
+
+
+@media screen and (max-width:660px){
+    .login_signup_container{
+        background: white;
+    }
+    .login_signup_box{
+        width: 100vw;
+        height: 95vh;
+    }
+    .login_signup_toggle{
+        height: 5vmax;
+    }
+    .login_signup_toggle > p {
+        font: 300 1.5vmax "Roboto";
+    }
+    .login_form,.signUp_form{
+        padding: 5vmax;
+    }
+    .login_form > div > input,
+    .signUp_form > div > input{
+        padding: 2.5vmax 5vmax;
+        font: 300 1.7vmax cursive;
+    }
+    .login_form > div > svg,
+    .signUp_form > div > svg{
+        font-size: 2.8vmax;
+    }
+    .login_form > a{
+        font: 300 1.8vmax "Gill Sans";
+    }
+    #signUp_image > img{
+        width: 8vmax;
+        border-radius: 100%;
+    }
+    #signUp_image >input::file-selector-button{
+        height: 10vh;
+        font: 400 1.8vmax cursive;
+    }
+    .login_btn,.signUp_btn{
+        font: 300 1.9vmax "Roboto";
+        padding: 1.8vmax
+    }
+}

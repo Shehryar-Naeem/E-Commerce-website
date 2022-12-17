@@ -22,10 +22,14 @@ const MiddlerWare = require("./MiddlerWare/ErrorMiddleWare")
 const userRouter = require("./Routers/UserRouter")
 const orderRoute = require("./Routers/OrderRouter")
 const cookieParser = require("cookie-parser") 
+const bodyParser = require("body-parser")
+const fileUpload = require("express-fileupload")
 
 
 App.use(express.json())
 App.use(cookieParser())
+App.use(bodyParser.urlencoded({extended:true}))
+App.use(fileUpload())
 
 // App.get("/",(req,res)=>{
 //     res.send("Api created")

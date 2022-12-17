@@ -35,9 +35,15 @@
 
 const App= require("./App")
 const dotenv= require("dotenv")
-const connectDatabase = require("./Config/database")
+const cloudinary = require("cloudinary")
 dotenv.config({path:"BackEnd/config.env"})
 
+const connectDatabase = require("./Config/database")
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+})
 
 //Uncaught Error
 process.on("uncaughtException",(err)=>{

@@ -55,7 +55,7 @@ export const ProductDetailReducer=(state={getSingleProduct:{}}, action)=>{
         case PRODUCT_DETAIL_FAIL:
             return {
                 loading:false,
-                error:action.payload
+                error:action.payload,
             }
         case CLEAR_ERROR:
             return {
