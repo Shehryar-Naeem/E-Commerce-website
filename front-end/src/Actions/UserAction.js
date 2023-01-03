@@ -6,6 +6,17 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
   CLEAR_ERROR,
+  LOAD_LOGIN_USER_REQUEST,
+  LOAD_LOGIN_USER_FAIL,
+  LOAD_LOGIN_USER_SUCCESS,
+  LOGOUT_USER_FAIL,
+  LOGOUT_USER_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAIL,
 } from "../Constant/UserAction";
 import axios from "axios";
 export const loginAction = (email, password) => async (dispatch) => {
@@ -43,6 +54,60 @@ export const registerUser = (userData) => async (dispatch) => {
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: REGISTER_USER_FAIL, payload: error.response.data.error });
+  }
+};
+export const LoadLoginUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_LOGIN_USER_REQUEST });
+    const { data } = await axios.get("/api/user/me");
+    dispatch({ type: LOAD_LOGIN_USER_SUCCESS, payload: data.getUser });
+  } catch (error) {
+    dispatch({
+      type: LOAD_LOGIN_USER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+export const logout = () => async (dispatch) => {
+  try {
+    await axios.get("/api/user/logoutuser");
+    dispatch({ type: LOGOUT_USER_SUCCESS });
+  } catch (error) {
+    dispatch({ type: LOGOUT_USER_FAIL, payload: error.response.data.error });
+  }
+};
+
+export const profileUpdateAction = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+    };
+    const { data } = await axios.put("/api/user/me/update", userData, config);
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({ type: UPDATE_PROFILE_FAIL, error: error.response.data.error });
+  }
+};
+
+export const updatePasswordAction = (password) => async (dispatch) => {
+  try {
+    dispatch({type:UPDATE_PASSWORD_REQUEST})
+    const config={
+      headers:{
+        "Content-Type":"application/json"
+      }
+    }
+    
+
+    const {data} = await axios.put("/api/user/password/update",password,config)
+    console.log(data);
+    dispatch({type:UPDATE_PASSWORD_SUCCESS,payload:data.success})
+
+  } catch (error) {
+    dispatch({type:UPDATE_PASSWORD_FAIL, payload:error.response.data.error})
+    // console.log(error.response.data.error);
   }
 };
 export const clearErrorAction = () => async (dispatch) => {

@@ -1,0 +1,151 @@
+.update_profile_container{
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(231, 231, 231);
+    position: fixed;
+    left: 0%;
+    top: 0%;
+}
+.update_profile_box{
+    background: #fff;
+    width: 25vw;
+    height: 70vh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.update_profile_heading{
+    text-align: center;
+    color: rgba(0, 0, 0, 0.664);
+    font: 400 1.3vmax "Roboto";
+    padding: 1.3vmax;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.205);
+    width: 50%;
+    margin: auto;
+}
+
+.update_profile_box > p:hover{
+    color: tomato;
+} 
+.update_profile_box > div >button{
+    background: tomato;
+    height: 3px;
+    width: 50%;
+    border: none;
+    outline: none;
+    transition:  all 0.5s;
+}
+.update_profile_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 2vmax;
+    justify-content: space-evenly;
+    height: 70%;
+    transition:  all 0.5s;
+}
+#update_profile_image >img{
+    width: 3vmax;
+    border-radius: 100%;
+    margin: 1vmax;
+}
+#update_profile_image > input{
+    display: flex;
+    padding: 0%;
+}
+#update_profile_image > input::file-selector-button{
+    cursor: pointer;
+    width: 100%;
+    z-index: 2;
+    height: 5vh;
+    border: none;
+    margin: 0%;
+    font: 400 1vmax cursive;
+    transition: all 0.5s;
+    padding: 1vmax;
+    color: rgba(0, 0, 0, 0.625);
+    background: rgb(255, 255, 255);
+}
+#update_profile_image >input::file-selector-button:hover{
+    background: rgb(235, 235, 235);
+}
+.update_profile_form >div{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.update_profile_form > div > input{
+    padding: 1vmax 4vmax;
+    padding-right: 1vmax;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    border-radius: 4px;
+}
+
+
+.update_profile_form > div > svg{
+    position: absolute;
+    transform: translateX(1vmax);
+    font-size: 1.6vmax;
+    color: rgba(0, 0, 0, 0.623);
+}
+.update_profile_btn{
+    border: none;
+    background-color: tomato;
+    color:#fff;
+    font: 300 1vmax "Roboto";
+    width: 100%;
+    padding: 0.8vmax;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.5s;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.219);
+}
+.update_profile_btn:hover{
+    background: rgb(179,66,46);
+}
+
+
+
+
+@media screen and (max-width:660px){
+    .update_profile_container{
+        background: white;
+    }
+    .update_profile_box{
+        width: 100vw;
+        height: 95vh;
+    }
+    .update_profile_form{
+        padding: 5vmax;
+    }
+    .update_profile_form > div > input{
+        padding: 2.5vmax 5vmax;
+        font: 300 1.7vmax cursive;
+    }
+
+    .update_profile_form > div > svg{
+        font-size: 2.8vmax;
+    }
+    .login_form > a{
+        font: 300 1.8vmax "Gill Sans";
+    }
+    #update_profile_image > img{
+        width: 8vmax;
+        border-radius: 100%;
+    }
+    #update_profile_image >input::file-selector-button{
+        height: 10vh;
+        font: 400 1.8vmax cursive;
+    }
+    .update_profile_btn{
+        font: 300 1.9vmax "Roboto";
+        padding: 1.8vmax
+    }
+}

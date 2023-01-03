@@ -1,12 +1,12 @@
 import React, { useRef, useState,useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./signUpLogin.css";
 import EmailIcon from "@material-ui/icons/Email";
 import PasswordIcon from "@material-ui/icons/Visibility";
 import FaceIcon from "@material-ui/icons/Face";
 import MailOutline from "@material-ui/icons/MailOutline";
 import LockOpen from "@material-ui/icons/LockOpen";
-import profile from "../../Images/profile.png"
+// import profile from "../../Images/profile.png"
 import {useDispatch, useSelector} from "react-redux";
 import { useAlert } from "react-alert";
 import {loginAction,clearErrorAction, registerUser} from "../../Actions/UserAction"
@@ -15,8 +15,9 @@ const SingUpLogin = () => {
   const loginTab = useRef(null);
   const RegisterTab = useRef(null);
   const switchertab = useRef(null);
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { loading,error} = useSelector(state=>state.loginUser)
+  const { loading,error , isAuthenicated} = useSelector(state=>state.loginUser)
   const alert = useAlert()
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -35,7 +36,10 @@ const SingUpLogin = () => {
       alert.error(error)
       dispatch(clearErrorAction())
     }
-  },[dispatch,error,alert])
+    if(isAuthenicated){
+      navigate("/account")
+    }
+  },[dispatch,error,alert,isAuthenicated,navigate])
   const loginHandler = (e) => {
     e.preventDefault();
     dispatch(loginAction(loginEmail,loginPassword))
@@ -50,7 +54,8 @@ const SingUpLogin = () => {
     dispatch(registerUser(myForm))
   };
   const registerDataChange=(e)=>{
-    if(e.targer.name==="avatar"){
+    const { name, value } = e.target;
+    if(name==="avatar"){
       const reader = new FileReader()
       reader.onload=()=>{
         if(reader.readyState===2){
@@ -58,12 +63,12 @@ const SingUpLogin = () => {
             setAvatar(reader.result)
         }
       }
-      reader.readAsDataURL(e.target.file[0])
+      reader.readAsDataURL(e.target.files[0])
     }else{
       setUser((preVal)=>{
         return {
           ...preVal,
-          [e.target.name]:e.target.value
+          [name]:value 
         }
       })
     }
@@ -162,7 +167,7 @@ const SingUpLogin = () => {
                 />
               </div>
               <div id="signUp_image">
-                <img src={profile} alt="images"/>
+                <img src={previewAvatar} alt="images"/>
                 <input type="file" name="avatar" accept="image/*" onChange={registerDataChange}/>
               </div>
               <input type="submit" value="register" className="signUp_btn"/>
