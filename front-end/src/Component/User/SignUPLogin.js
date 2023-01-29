@@ -1,5 +1,5 @@
 import React, { useRef, useState,useEffect} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./signUpLogin.css";
 import EmailIcon from "@material-ui/icons/Email";
 import PasswordIcon from "@material-ui/icons/Visibility";
@@ -16,6 +16,7 @@ const SingUpLogin = () => {
   const RegisterTab = useRef(null);
   const switchertab = useRef(null);
   const navigate = useNavigate()
+  const location = useLocation()
   const dispatch = useDispatch()
   const { loading,error , isAuthenicated} = useSelector(state=>state.loginUser)
   const alert = useAlert()
@@ -31,15 +32,16 @@ const SingUpLogin = () => {
   const [avatar,setAvatar] = useState("")
   const [previewAvatar,setPreviewAvatar] = useState("/profile.png")
   // const LoginUser = useSelector((state)=> state.loginUser)
+  const redirect = location.search ?"/"+ location.search.split("=")[1] : "/account";
   useEffect(()=>{
     if(error){
       alert.error(error)
       dispatch(clearErrorAction())
     }
     if(isAuthenicated){
-      navigate("/account")
+      navigate(redirect)
     }
-  },[dispatch,error,alert,isAuthenicated,navigate])
+  },[dispatch,error,alert,isAuthenicated,navigate,redirect])
   const loginHandler = (e) => {
     e.preventDefault();
     dispatch(loginAction(loginEmail,loginPassword))
@@ -68,7 +70,7 @@ const SingUpLogin = () => {
       setUser((preVal)=>{
         return {
           ...preVal,
-          [name]:value 
+          [name]:value  
         }
       })
     }

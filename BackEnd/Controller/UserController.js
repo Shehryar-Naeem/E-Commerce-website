@@ -91,7 +91,7 @@ const foregetPassword= AsyncError(async (req,res,next)=>{
 
     await userFindForRestPassword.save({validateBeforeSave:false})
 
-    const resetPasswordUrl= `${req.protocol}//${req.get("host")}/api/user/password/reset/${resetToken}`
+    const resetPasswordUrl= `${process.env.FRONT_END_URL}/password/reset/${resetToken}`
 
 
     const message= `Your password token is :- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then, please ignore it `

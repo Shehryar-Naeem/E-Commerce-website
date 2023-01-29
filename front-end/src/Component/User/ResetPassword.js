@@ -1,60 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./updatePofile.css";
-import VpnKeyIcon from "@material-ui/icons/VpnKey"
-import LockkeyIcon from "@material-ui/icons/LockOpen"
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import LockIcon from "@material-ui/icons/Lock";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import {
   clearErrorAction,
-  updatePasswordAction,
+  ResetPasswordAction,
 } from "../../Actions/UserAction";
 import LoadingComp from "../Layout/Loader/Loading";
-import { UPDATE_PASSWORD_RESET } from "../../Constant/UserAction";
+
 import MetaData from "../Layout/MetaData";
 
-const UpdatePassowrd = () => {
+const ResetPassword = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.loginUser);
-
-  const { loading, error, isUpdated } = useSelector(
-    (state) => state.updateProfile
+  const {token} = useParams()
+ 
+  const { loading, error, success } = useSelector(
+    (state) => state.forgetPassword
   );
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const updatePassWordHandler = (e) => {
     e.preventDefault();
-    const MyForm = new FormData()
-
-    MyForm.set("oldPassword",oldPassword)
-    MyForm.set("newPassword",newPassword)
-    MyForm.set("confirmPassword",confirmPassword)
-    dispatch(updatePasswordAction(MyForm))
+    const MyForm = new FormData();
+    // console.log(password);
+    // console.log(confirmPassword);
+    MyForm.set("password", password);
+    MyForm.set("confirmPassword", confirmPassword);
+    dispatch(ResetPasswordAction(token,MyForm))
   };
 
-  useEffect(()=>{
-    if(error){
-        alert.error(error)
-        dispatch(clearErrorAction())
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrorAction());
     }
-    if(isUpdated){
-        alert.success(`${user.name} password successfully updated`)
-        navigate("/account")
-        dispatch({type:UPDATE_PASSWORD_RESET})
+    // console.log(success);
+    if (success) {
+      alert.success(`password successfully updated`);
+      navigate("/login");
     }
-  },[alert,navigate,isUpdated,user.name,dispatch,error  ])
-
+  }, [alert, navigate, success,  dispatch, error]);
   return (
     <>
       {loading ? (
         <LoadingComp />
       ) : (
         <>
-          <MetaData title={`Mr ${user.name} Update Password`} />
+          <MetaData title={`Update Password`} />
           <div className="update_profile_container">
             <div className="update_profile_box">
               <h2 className="update_profile_heading">Update Password</h2>
@@ -67,22 +64,11 @@ const UpdatePassowrd = () => {
                   <VpnKeyIcon />
                   <input
                     type="password"
-                    placeholder="oldPassword"
+                    placeholder="Password"
                     required
-                    name="oldPassword"
-                    value={oldPassword}
-                    onChange={(e)=>setOldPassword(e.target.value)}
-                  />
-                </div>
-                <div className="signUp_password">
-                  <LockkeyIcon />
-                  <input
-                    type="password"
-                    placeholder="newPassword"
-                    required
-                    name="newPassword"
-                    value={newPassword}
-                    onChange={(e)=>setNewPassword(e.target.value)}
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="signUp_password">
@@ -93,7 +79,7 @@ const UpdatePassowrd = () => {
                     required
                     name="confirmPassword"
                     value={confirmPassword}
-                    onChange={(e)=>setConfirmPassword(e.target.value)}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </div>
                 <input
@@ -110,4 +96,4 @@ const UpdatePassowrd = () => {
   );
 };
 
-export default UpdatePassowrd;
+export default ResetPassword;

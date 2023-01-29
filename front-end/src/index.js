@@ -13,6 +13,8 @@ const options={
 }
 root.render(
   <>
+  
+  
     <Provider store={Store}>
       <AlertProvider template={AlertTemplate} {...options}>
         <App />

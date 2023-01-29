@@ -1,0 +1,58 @@
+.cart_item_cart{
+    display: flex;
+    padding: 1vmax;
+    height: 8vmax;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+.cart_item_cart > img{
+    width: 5vmax;
+}
+.cart_item_cart > div{
+    display: flex;
+    flex-direction: column;
+    margin: 0.3vmax 1vmax;
+}
+.cart_item_cart > div > a{
+    text-decoration: none;
+    font: 500 0.9vmax cursive;
+    color: rgba(24, 24, 24, 0.815);
+    text-decoration: none;
+    cursor: pointer;
+}
+.cart_item_cart > div > span{
+    font: 500 0.9vmax "Roboto";
+    color: rgba(24, 24, 24, 0.815);
+}
+.cart_item_cart > div > p{
+    font: 500 0.9vmax "Roboto";
+    color: tomato;
+    cursor: pointer;
+}
+.cart_container{
+    width: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr;
+}
+@media screen and (max-width:600px) {
+    .cart_item_cart{
+        padding: 3vmax;
+        height: 25vmax;
+    }
+    .cart_item_cart >img{
+        width: 10vmax;
+    }
+    .cart_item_cart > div{
+        margin: 1vmax 2vmax;
+    }
+    .cart_item_cart > div > a{
+        font: 500 2vmax cursive;
+    }
+    .cart_item_cart > div > span{
+        font: 500 1.9vmax "Roboto";
+    }
+    .cart_item_cart > div > p{
+        font: 500 2vmax cursive;
+    }
+}

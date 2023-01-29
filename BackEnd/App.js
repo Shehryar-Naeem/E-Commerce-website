@@ -21,10 +21,13 @@ const Router = require("./Routers/Router")
 const MiddlerWare = require("./MiddlerWare/ErrorMiddleWare")
 const userRouter = require("./Routers/UserRouter")
 const orderRoute = require("./Routers/OrderRouter")
+const paymentRoute = require("./Routers/PaymentRouter")
 const cookieParser = require("cookie-parser") 
 const bodyParser = require("body-parser")
 const fileUpload = require("express-fileupload")
+const dotenv= require("dotenv")
 
+dotenv.config({path:"BackEnd/config.env"})
 
 App.use(express.json())
 App.use(cookieParser())
@@ -38,6 +41,7 @@ App.use(fileUpload())
 App.use("/api/product",Router)
 App.use("/api/user",userRouter)
 App.use("/api/order",orderRoute)
+App.use("/api/payment",paymentRoute)
 App.use(MiddlerWare)
 
 module.exports = App;

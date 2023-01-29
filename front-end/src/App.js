@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Headers from "./Component/Layout/Header/Headers.js";
 import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import WebFont from "webfontloader";
@@ -17,8 +17,21 @@ import Account from "./Component/User/Account.js"
 import ProtectedRoute from "./Component/Route/ProtectedRoute.js";
 import UpdateProfile from "./Component/User/UpdateProfile.js"
 import UpdatePassword from "./Component/User/UpdatePassword.js"
+import ForgetPassword from "./Component/User/ForgetPassword.js"
+import ResetPassword from "./Component/User/ResetPassword.js"
+import Cart from "./Component/Cart/Cart.js"
+import Shipping from "./Component/Cart/Shipping.js"
+import ConfirmOrder from "./Component/Cart/ConfirmOrder.js"
+import PaymentProcess from "./Component/Cart/PaymentProcess.js" 
+import axios from "axios";
 const App = () => {
   const {isAuthenicated,user}= useSelector(state=>state.loginUser)
+  const [stripeApikey,setStripeApiKey] = useState("")
+  async function getStripeApiKey(){
+    const {data} = await axios.get("/api/payment/stripeapikey")
+    console.log(data);
+    setStripeApiKey(data.stripeApiKey)
+  }
   React.useEffect(() => {
     WebFont.load({
       google: {
@@ -26,6 +39,7 @@ const App = () => {
       },
     });
     Store.dispatch(LoadLoginUser())
+    getStripeApiKey()
   },[]);
   return (
     <> 
@@ -47,8 +61,20 @@ const App = () => {
           <Route element={<ProtectedRoute/>}>
             <Route path="/update/password" element={<UpdatePassword/>}/>
           </Route>
+          <Route element={<ProtectedRoute/>}>
+            <Route path="/shipping" element={<Shipping/>}/>
+          </Route>
+          <Route element={<ProtectedRoute/>}>
+            <Route path="/order/confirm" element={<ConfirmOrder/>}/>
+          </Route>
+          <Route element={<ProtectedRoute/>}>
+            <Route path="/process/payment" element={<PaymentProcess/>}/>
+          </Route>
+          <Route path="/password/forget" element={<ForgetPassword/>}/>
+          <Route path="/password/reset/:token" element={<ResetPassword/>}/>
           <Route path="/search" element={<Search/>} />
           <Route path="/login" element={<SingUpLogin/>}/>
+          <Route path="/Cart" element={<Cart/>}/>
         </Routes>
       <Footer/>
       </Router>
