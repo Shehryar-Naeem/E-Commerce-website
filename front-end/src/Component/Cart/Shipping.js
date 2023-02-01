@@ -38,7 +38,7 @@ const Shipping = () => {
   return (
     <>
       <MetaData title="Shipping_Info" />
-      <CheckOutStep activeStep={1}/> 
+      <CheckOutStep activeStep={0}/> 
       <div className="shipping_container">
         <div className="shipping_box">
           <h2 className="shipping_heading">Shipping Detail</h2>

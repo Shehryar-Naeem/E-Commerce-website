@@ -9,7 +9,6 @@ import { Typography } from "@material-ui/core"
 const ConfirmOrder=()=>{
   const navigate = useNavigate()
     const {cartitems,shippingInfo} = useSelector(state=>state.Cart)
-    console.log(shippingInfo);
     const {user} = useSelector(state=>state.loginUser)
     const subTotal = cartitems.reduce((acc,item)=> acc + item.quantity * item.price,0)
     
