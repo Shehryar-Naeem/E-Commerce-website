@@ -21,7 +21,8 @@ const ConfirmOrder=()=>{
         shippingCharges,
         tax,
         totalPrice,
-        address
+        address,
+        subTotal
       }
       sessionStorage.setItem("orderInfo",JSON.stringify(data))
       navigate("/process/payment")

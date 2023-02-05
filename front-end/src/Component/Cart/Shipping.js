@@ -22,7 +22,7 @@ const Shipping = () => {
   const [city, setCity] = useState(shippingInfo.city);
   const [state, setState] = useState(shippingInfo.state);
   const [country, setCountry] = useState(shippingInfo.country);
-  const [pinCode, setPinCode] = useState(shippingInfo.postalCode);
+  const [postalCode, setPostalCode] = useState(shippingInfo.postalCode);
   const [phone, setPhone] = useState(shippingInfo.phone);
   const shippingSubmit = (e) => {
     e.preventDefault()
@@ -31,7 +31,7 @@ const Shipping = () => {
       return
     }
    dispatch(
-    saveShippingInfoAcion({address,city,state,country,pinCode,phone}))
+    saveShippingInfoAcion({address,city,state,country,postalCode,phone}))
     navigate("/order/confirm")
 
   };
@@ -74,8 +74,8 @@ const Shipping = () => {
                 type="number"
                 placeholder="Pin Code"
                 required
-                value={pinCode}
-                onChange={(e) => setPinCode(e.target.value)}
+                value={postalCode}
+                onChange={(e) => setPostalCode(e.target.value)}
               />
             </div>
             <div>

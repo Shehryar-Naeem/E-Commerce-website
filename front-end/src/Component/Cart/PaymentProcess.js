@@ -11,23 +11,40 @@ import CreditCardIcon from "@material-ui/icons/CreditCard"
 import EventIcon from "@material-ui/icons/Event"
 import VpnKeyIcon from "@material-ui/icons/VpnKey"
 import "./payment.css"
+import { clearErrorAction, orderItemAction } from "../../Actions/orderItemAction"
 
 
-const PaymentProcess =({stripeSecretKey})=>{
+const PaymentProcess =( )=>{
     const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"))
     const dispatch = useDispatch()
     const alert = useAlert()
     const stripe = useStripe()
-    const element = useElements();
+    const elements = useElements();
     const payBtn= useRef()
     const navigate = useNavigate()
 
     const {shippingInfo,cartitems} = useSelector(state => state.Cart);
     const {user} = useSelector(state=>state.loginUser)
+    const {error} = useSelector(state=>state.newOrder)
+    const order={
+      shippingInfo,
+      orderItem:cartitems,
+      itemPrice:orderInfo.subTotal,
+      taxPrice:orderInfo.tax,
+      shippingCharges: orderInfo.shippingCharges,
+      totalPrice:orderInfo.totalPrice
+    }
     const paymentData = {
       amount:Math.round(orderInfo.totalPrice*100)
     }
-    console.log(stripeSecretKey);
+
+    useEffect(()=>{
+      if(error){
+        alert.error(error)
+        dispatch(clearErrorAction())
+      }
+    },[error,alert,dispatch])
+
     const submitHandler = async (e) => {
         e.preventDefault();
     
@@ -36,7 +53,7 @@ const PaymentProcess =({stripeSecretKey})=>{
         try {
           const config = {
             headers: {
-              "Authorization": `Bearer ${stripeSecretKey}`,
+             
                 
               "Content-Type": "application/json",
             },
@@ -48,29 +65,34 @@ const PaymentProcess =({stripeSecretKey})=>{
           );
     
           const client_secret = data.client_secret;
-    
-          if (!stripe || !element) return;
-    
-          const result = await stripe.confirmCardPayment(client_secret, {
-            payment_method: {
-              card: element.getElement(CardNumberElement),
-                address: {
-                  line1: shippingInfo.address,
-                  city: shippingInfo.city,
-                  state: shippingInfo.state,
-                  postal_code: shippingInfo.pinCode,
-                  country: shippingInfo.country,
-                },
-              },
-            },
-          );
+          if (!stripe || !elements) return;
+          const result = await stripe.confirmCardPayment(client_secret,{     payment_method: {
+            card: elements.getElement(CardNumberElement),
+            billing_details:{
+              name:user.name,
+              email:user.email,
+              address:{
+                line1:shippingInfo.address,
+                city:shippingInfo.city,
+                state:shippingInfo.state,
+                postal_code:shippingInfo.postalCode,
+                country:shippingInfo.country
+              }
+            }
+          }}
+       
+      );
+          console.log(result);
           if (result.error) {
               payBtn.current.disabled = false;    
               alert.error(result.error.message);
           } else {
-            if (result.paymentIntent.status === "Succeeded") {
-
-    
+            if (result.paymentIntent.status === "succeeded") {
+              order.paymentInfo={
+                id:result.paymentIntent.id,
+                status: result.paymentIntent.status
+              }
+              dispatch(orderItemAction(order))
               navigate("/success");
             } else {
               alert.error("There's some issue while processing payment ");
@@ -78,7 +100,7 @@ const PaymentProcess =({stripeSecretKey})=>{
           }
         } catch (error) {
           payBtn.current.disabled = false;
-          console.log(error);
+
           alert.error(error.response.data.error);
         }
       };

@@ -15,9 +15,9 @@ const Router = express.Router();
 
 Router.route("/orderitem/new").post(isAuthenticationUser, orderProduct);
 
-Router.route("/getsingleOrderbyadmin/:id").get(
+Router.route("/getsingleOrder/:id").get(
   isAuthenticationUser,
-  AuthorizationRole("admin"),
+  // AuthorizationRole("admin"),
   getSingleOrder
 );
 Router.route("/orders/me").get(isAuthenticationUser, getOrdersOfLogInUser);

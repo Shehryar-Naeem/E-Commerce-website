@@ -23,17 +23,19 @@ import Cart from "./Component/Cart/Cart.js";
 import Shipping from "./Component/Cart/Shipping.js";
 import ConfirmOrder from "./Component/Cart/ConfirmOrder.js";
 import PaymentProcess from "./Component/Cart/PaymentProcess.js";
+import OrderSuccess from "./Component/Cart/OrderSuccess.js"
+import MyOrderItems from "./Component/Order/MyOrderItems.js"
+import OrderDetail from "./Component/Order/OrderDetail.js"
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 const App = () => {
   const { isAuthenicated, user } = useSelector((state) => state.loginUser);
-  const [stripeApiKey, setStripeApiKey] = useState("");
-  const [stripeSecretKey, setStripeSecretKey] = useState("");
+  const [stripeApiKey, setStripeApiKey] = useState(""); 
   const getStripeApiKey= async()=>{
     const { data } = await axios.get("/api/payment/stripeapikey");
+    console.log(data);
     setStripeApiKey(data.stripeApiKey)
-    setStripeSecretKey(data.stripeSecretKey)
   }
   React.useEffect(() => {
     WebFont.load({
@@ -73,10 +75,18 @@ const App = () => {
             </Route>
               <Route element={<ProtectedRoute />}>
                 
-                <Route path="/process/payment" element={<PaymentProcess stripeSecretKey={stripeSecretKey}/>} />
+                <Route path="/process/payment" element={<PaymentProcess/>} />
                 
               </Route>
-    
+            <Route element={<ProtectedRoute/>}>
+              <Route path="/success" element={<OrderSuccess/>}></Route>
+            </Route>
+            <Route element={<ProtectedRoute/>}>
+              <Route path="/orders" element={<MyOrderItems/>}/>
+            </Route>
+            <Route element={<ProtectedRoute/>}>
+              <Route path="/getsingleOrder/:id" element={<OrderDetail/>}/>
+            </Route>
             <Route path="/password/forget" element={<ForgetPassword />} />
             <Route path="/password/reset/:token" element={<ResetPassword />} />
             <Route path="/search" element={<Search />} />
